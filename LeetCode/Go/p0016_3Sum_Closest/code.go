@@ -29,6 +29,7 @@ func threeSumClosest(nums []int, target int) int {
 	return result
 }
 
+//神奇的取绝对值，我也忘了从哪抄的了
 func CalcAbs(a int) (ret int) {
 	ret = (a ^ a>>31) - a>>31
 	return
