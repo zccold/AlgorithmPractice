@@ -1,18 +1,38 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <assert.h>
+
+using namespace std;
+
 class Solution {
 public:
-    int lengthOfLongestSubstring(string s) {
-        if(s == "")
-            return 0;
-        string::size_type l = 0,r;
-        int maxLength = 0;
-        for(r = 1; r < s.size(); r++){
-            string::size_type idx = s.find(s[r], l);
-            if(idx != s.npos && idx < r){
-                maxLength = max(maxLength, static_cast<int>(r - l));
-                l = idx + 1;
+    string longestPalindrome(string s) {
+        string appendS = "$#";
+        for(auto t : s){
+            appendS += t;
+            appendS += "#";
+        }
+        
+        vector<int> p(appendS.size(), 0);
+        int mx = 0, id = 0, resLen = 0, resCenter = 0;
+        for(int i = 1; i < appendS.size(); i++){
+            p[i] = mx > i ? min(p[2*id - i], mx - i) : 1;
+            while(appendS[i + p[i]] == appendS[i - p[i]])
+                p[i]++;
+            
+            if(mx < i + p[i]){
+                mx = i + p[i];
+                id = i;
+            }
+            
+            if(resLen < p[i]){
+                resLen = p[i];
+                resCenter = i;
             }
         }
-        return max(maxLength, static_cast<int>(r - l));
+        return s.substr((resCenter - resLen)/2, resLen - 1);
     }
 };
 
@@ -47,9 +67,9 @@ int main() {
     while (getline(cin, line)) {
         string s = stringToString(line);
         
-        int ret = Solution().lengthOfLongestSubstring(s);
+        string ret = Solution().longestPalindrome(s);
 
-        string out = to_string(ret);
+        string out = (ret);
         cout << out << endl;
     }
     return 0;

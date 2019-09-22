@@ -1,3 +1,12 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <assert.h>
+#include <sstream>
+
+using namespace std;
+
 class Solution {
 public:
     bool findMedianOneSortedArrays(int& idx, vector<int>& nums1, vector<int>& nums2){
