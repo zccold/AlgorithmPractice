@@ -1,6 +1,6 @@
 
-# Created by https://www.gitignore.io/api/linux,windows
-# Edit at https://www.gitignore.io/?templates=linux,windows
+# Created by https://www.gitignore.io/api/linux,windows,visualstudiocode
+# Edit at https://www.gitignore.io/?templates=linux,windows,visualstudiocode
 
 ### Linux ###
 *~
@@ -16,6 +16,17 @@
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -43,4 +54,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/linux,windows
+# End of https://www.gitignore.io/api/linux,windows,visualstudiocode
