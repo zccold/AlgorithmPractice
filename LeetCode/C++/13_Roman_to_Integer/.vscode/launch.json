@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/13_Longest_Common_Prefix.exe",
+            "program": "${workspaceFolder}/13_Roman_to_Integer.exe",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",

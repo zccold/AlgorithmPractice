@@ -7,7 +7,7 @@
             "label": "build hello world",
             "type": "shell",
             "command": "g++",
-            "args": ["-g", "-std=c++11", "-o", "13_Longest_Common_Prefix", "13_Longest_Common_Prefix.cpp"],
+            "args": ["-g", "-std=c++11", "-o", "16_3Sum_Closest", "16_3Sum_Closest.cpp"],
             "group": {
                 "kind": "build",
                 "isDefault": true
