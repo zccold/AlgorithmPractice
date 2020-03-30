@@ -131,7 +131,7 @@ int main() {
     while (getline(cin, line)) {
         TreeNode* root = stringToTreeNode(line);
         
-        vector<int> ret = Solution().preorderTraversal(root);
+        vector<int> ret = Solution().postorderTraversal(root);
 
         string out = integerVectorToString(ret);
         cout << out << endl;
