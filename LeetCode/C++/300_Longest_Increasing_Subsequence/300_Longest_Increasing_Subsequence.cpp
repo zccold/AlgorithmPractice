@@ -9,7 +9,7 @@ using namespace std;
 class Solution {
 public:
     /*
-     * dp[i] = max(dp[j]), 0 <= j < i && Vj < Vi 
+     * dp[i] = max(dp[j]) + 1, 0 <= j < i && Vj < Vi 
      * return max(dp)
      * O(n^2)
      */
