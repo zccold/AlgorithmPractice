@@ -10,18 +10,24 @@ class Solution {
 public:
     /*
      * dp[k, i] = max(dp[k, i-1], prices[i]-prices[j]+dp[k-1, j-1] (j = 1, ..., i))
+     * 前i天的k次交易的总收益 = max{前i-1天的k次交易, 
+     *                            第j天买入，第i天卖出收益 + 前j-1天k-1次收益}
+     * 优化：本次交易只与上一次交易有关，因此置k = 2。
      */
     int maxProfit(vector<int>& prices) {
         if(prices.empty()) return 0;
-        vector<vector<int>> dp(3, vector<int>(prices.size(), 0));
-        for(int k = 1; k < 3; k++){
+        vector<vector<int>> dp(2, vector<int>(prices.size(), 0));
+        int flip = 1, count = 1;
+        while(count <= 2){
             int tmp = prices[0];
-            for(int i = 1; i < prices.size(); i++){
-                tmp = min(tmp, prices[i] - dp[k-1][i-1]);
-                dp[k][i] = max(dp[k][i-1], prices[i]-tmp);
+             for(int i = 1; i < prices.size(); i++){
+                tmp = min(tmp, prices[i] - dp[1-flip][i-1]);
+                dp[flip][i] = max(dp[flip][i-1], prices[i] - tmp);
             }
+            count++;
+            flip = 1 - flip;
         }
-        return dp.back().back();
+        return dp[1-flip].back();
     }
 };
 
