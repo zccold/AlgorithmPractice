@@ -6,17 +6,14 @@ using namespace std;
 
 class Solution {
 public:
-    /*
-     * 我傻了，AddressSanitizer又报heap-buffer-overflow错误
-     */
     int minDistance(string word1, string word2) {
         vector<vector<int>> dp(word1.size()+1, vector<int>(word2.size()+1, 0));
         //初始化word2.size() == 0时的编辑距离
         for(int i = 0; i < word1.size(); i++)
-            dp[0][i+1] = i+1;
+            dp[i+1][0] = i+1;
         //初始化word1.size() == 0时的编辑距离
         for(int j = 0; j < word2.size(); j++)
-            dp[j+1][0] = j+1;
+            dp[0][j+1] = j+1;
         //编辑距离=min(当前字符相等，当前字符不等(增、删、改)+1)
         for(int i = 0; i < word1.size(); i++){
             for(int j = 0; j < word2.size(); j++){
