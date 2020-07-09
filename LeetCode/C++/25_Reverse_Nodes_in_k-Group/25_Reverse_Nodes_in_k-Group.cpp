@@ -17,7 +17,32 @@ struct ListNode {
 
 class Solution {
 public:
-    ListNode* reverseKGroup(ListNode* head, int k) {
+    /*
+     * 使用递归处理难以处理的分段链表逆转后首尾相接问题。
+     */
+    ListNode* reverseKGroup2(ListNode* head, int k) {
+        if(!head || k <= 1)
+            return head;
+        ListNode* cur = head;
+        int i = 0;
+        while(i < k && cur){
+            i++;
+            cur = cur->next;
+        }
+        if(i == k){
+            cur = reverseKGroup2(cur, k);
+            while(i-- >= 0){
+                ListNode* tmp = head->next;
+                head->next = cur;
+                cur = head;
+                head = tmp;
+            }
+            head = cur;
+        }
+        return head;
+    }
+    
+    ListNode* reverseKGroup1(ListNode* head, int k) {
         if(!head || k <= 1)
             return head;
         ListNode preHead(0), *first, *second, *pre, *suf;
