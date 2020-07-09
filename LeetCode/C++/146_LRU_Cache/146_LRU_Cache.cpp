@@ -1,9 +1,3 @@
-//本地运行正确，leetcode提交产生运行时错误
-/*
- * testcase
- * ["LRUCache","put","get","put","get","get"]
- * [[1],[2,1],[2],[3,2],[2],[3]]
- */
 #include <iostream>
 #include <map>
 #include <vector>
@@ -15,34 +9,33 @@ using namespace std;
 
 class LRUCache {
 private:
-    list<int> lru;
-    map<int, list<int>::iterator> _htable;
+    list<pair<int, int>> _tbl;
+    map<int, list<pair<int, int>>::iterator> _map;
     int _cap;
 public:
-    LRUCache(int capacity):_cap(capacity){}
+    LRUCache(int capacity) : _cap(capacity){}
 
     int get(int key) {
-        if(_htable.find(key) == _htable.end())
+        if(_map.find(key) == _map.end())
             return -1;
-        int val = *_htable[key];
-        lru.erase(_htable[key]);
-        lru.push_front(val);
-        _htable[key] = lru.begin();
+        int val = _map[key]->second;
+        _tbl.erase(_map[key]);
+        _tbl.push_front(make_pair(key, val));
+        _map[key] = _tbl.begin();
         return val;
     }
     
     void put(int key, int value) {
-        if(_htable.find(key) != _htable.end()){
-            *_htable[key] = value;
-            lru.erase(_htable[key]);
+        if(_map.find(key) != _map.end()){
+            _tbl.erase(_map[key]);
         }else if(_cap == 0){
-            _htable.erase(lru.back());
-            lru.pop_back();
+            _map.erase(_tbl.back().first);
+            _tbl.pop_back();
         }else{
             _cap--;
         }
-        lru.push_front(value);
-        _htable[key] = lru.begin();
+        _tbl.push_front(make_pair(key, value));
+        _map[key] = _tbl.begin();
     }
 };
 
