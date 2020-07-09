@@ -10,7 +10,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/124_Valid_Palindrome.exe",
+            "program": "${workspaceFolder}/125_Valid_Palindrome.exe",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",

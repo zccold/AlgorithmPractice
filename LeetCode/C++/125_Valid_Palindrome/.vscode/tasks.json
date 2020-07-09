@@ -7,7 +7,7 @@
             "label": "build hello world",
             "type": "shell",
             "command": "g++",
-            "args": ["-g", "-o", "124_Valid_Palindrome", "124_Valid_Palindrome.cpp"],
+            "args": ["-g", "-o", "125_Valid_Palindrome", "125_Valid_Palindrome.cpp"],
             "group": {
                 "kind": "build",
                 "isDefault": true
