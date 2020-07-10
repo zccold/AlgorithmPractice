@@ -9,6 +9,9 @@ using namespace std;
 
 class LRUCache {
 private:
+    /*
+     * 使用list（底层为双向链表）既能O(1)的删除节点（容量不够时），也能O(1)的将节点挪到链表首或尾。
+     */
     list<pair<int, int>> _tbl;
     map<int, list<pair<int, int>>::iterator> _map;
     int _cap;
