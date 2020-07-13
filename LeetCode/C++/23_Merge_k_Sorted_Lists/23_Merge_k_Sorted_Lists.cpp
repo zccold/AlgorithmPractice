@@ -19,7 +19,8 @@ class Solution
 {
 public:
 ///////////////////////////////////////////////////////////
-// merge sort
+// 二路归并，假设链表长度都为n，链表数为k，所有数均匀分布。
+// 时间复杂度记比较次数，为：2n+3n+kn = (k+2)kn/2
     ListNode* mergeTwoLists(ListNode* ln1, ListNode* ln2){
         ListNode head(0), *ptr;
         ptr = &head;
@@ -48,7 +49,7 @@ public:
         return lists.front();
     }
 ///////////////////////////////////////////////////////////
-// heap sort: priority_queue
+// k路归并+最小堆：时间复杂度为：klogk + k(n-1)logk = knlogk
     struct compare{
         bool operator()(const ListNode* l, const ListNode* r){
             return l->val > r->val;
@@ -74,7 +75,7 @@ public:
         return head.next;
     }
 ///////////////////////////////////////////////////////////
-// heap sort
+// 堆排序，时间复杂度为：nklog(nk)
     static bool heapComp(ListNode* l, ListNode* r){
         return l->val > r->val;
     }
