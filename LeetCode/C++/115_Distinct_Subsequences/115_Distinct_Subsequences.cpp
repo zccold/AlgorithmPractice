@@ -9,6 +9,15 @@ using namespace std;
 
 class Solution {
 public:
+    /*
+     * 这题很简单，思路来说的话，先是递归s的每个字符，每个字符有保留以及删除两种选择，这样得到一颗递归树，
+     * 这样优化子结构与重叠子问题就出来了，接下来进行动态规划的优化。
+     * 很容易联想到背包问题，然后得出递推方程
+     * dp[i+1, j+1] = (s[i] == t[j]) ? (dp[i][j] + dp[i][j+1]) : dp[i][j+1]
+     * 即当s[i] == t[j]，可以选择保留以及删除t[j]，否则，只能删除t[j]。
+     * 
+     * 接着进行空间优化
+     */
     int numDistinct(string s, string t) {
         vector<long long> dp(t.size()+1, 0);
         dp[0] = 1;
