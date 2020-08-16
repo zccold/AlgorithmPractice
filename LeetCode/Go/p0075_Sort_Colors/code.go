@@ -1,5 +1,6 @@
 package p0075_Sort_Colors
 
+//写完又想了想，1不一定要这么分开，第一遍可以1放到和0一组，这个中间分割线就没这么蛋疼了，其实就是快排思想，最优中间值是已知的
 func sortColors(nums []int) {
 	//log.Println(nums)
 	i, j := 0, len(nums)-1
