@@ -11,7 +11,7 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${fileDirname}\\..\\build\\${fileBasenameNoExtension}.exe"
             ],
             "options": {
                 "cwd": "C:\\mingw-w64\\x86_64-8.1.0-posix-sjlj-rt_v6-rev0\\mingw64\\bin"
