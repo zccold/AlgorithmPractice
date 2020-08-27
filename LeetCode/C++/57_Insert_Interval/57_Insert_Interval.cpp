@@ -32,20 +32,48 @@ public:
     }
 };
 
-string vectorVectorStringToString(const vector<vector<string>>& vvs) {
-    string res("[\n");
-    for(auto vs : vvs) {
-        res += "\t[\n";
-        for(auto str : vs) {
-            res += "\t\"";
-            res += str;
-            res += "\",\n";
+vector<vector<int>> stringToVectorVectorInt(string input) {
+    vector<vector<int>> res;
+    stringstream ssGrid(input.substr(2, input.size() - 4));
+    string row;
+    char delimRow = ']', delimItem = ',';
+    while(getline(ssGrid, row, delimRow)) {
+        vector<int> vi;
+        stringstream ssRow(row);
+        string item;
+        while(getline(ssRow, item, delimItem)) {
+            vi.push_back(stoi(item));
         }
-        res.erase(res.end() - 2, res.end());
-        res += "\n\t],\n";
+        res.push_back(vi);
+        getline(ssGrid, row, '[');
     }
-    res.erase(res.end() - 2, res.end());
-    res += "\n]";
+    return res;
+}
+
+vector<int> stringToVectorInt(string input) {
+    vector<int> vi;
+    stringstream ss(input.substr(1, input.size() - 2));
+    string item;
+    char delim = ',';
+    while(getline(ss, item, delim)) {
+        vi.push_back(stoi(item));
+    }
+    return vi;
+}
+
+string vectorVectorIntToString(const vector<vector<int>>& vvi) {
+    string res("[");
+    for(auto vi : vvi) {
+        res += "[";
+        for(auto num : vi) {
+            res += num;
+            res += ",";
+        }
+        res.erase(res.end() - 1);
+        res += "],";
+    }
+    res.erase(res.end() - 1);
+    res += "]";
     return res;
 }
 
@@ -53,12 +81,13 @@ int main() {
     string line;
     while (true) {
         getline(cin, line);
+        vector<vector<int>> intervals = stringToVectorVectorInt(line);
         
-        int n = stoi(line);
+        getline(cin, line);
+        vector<int> newInterval = stringToVectorInt(line);
+        vector<vector<int>> newIntervals = Solution().insert(intervals, newInterval);
 
-        vector<vector<string>> vvs = Solution().solveNQueens(n);
-
-        string str = vectorVectorStringToString(vvs);
+        string str = vectorVectorIntToString(newIntervals);
 
         cout << str << endl;
     }
