@@ -4,63 +4,50 @@
 #include <sstream>
 #include <algorithm>
 #include <unordered_map>
+#include <map>
 
 using namespace std;
 
 class Solution {
 public:
-    /// can't ac testcase: 1 214748364
-    /// Status: Time Limit Exceeded
-
-    /// "/" is not work, because of the fraction inaccurate,
-    /// we should use "%"
+    /*
+     * 思路：这题最难的是处理各种边界case。
+     *      case1：负数，而且是INT_MIN这种铁定溢出的负数，只能提升int为int64_t。
+     *      case2：res的符号问题，由于提升int为int64_t，可直接将除数与被除数取正， 
+     *             并直接计算res的符号。
+     *      循环的处理比较简单，使用map记录每次计算后的余数与在res中的idx。
+     */
     string fractionToDecimal(int numerator, int denominator) {
-        if(numerator == 0 || denominator == 0)
+        if(denominator == 0 || numerator == 0) {
             return string("0");
+        }
         string res;
-        int sign = ((numerator >= 0) ^ (denominator >= 0)) ? -1 : 1;
-        if(sign == -1)
-            res += "-";
-
-        // can't use abs(numerator) or abs(denominator), because of INT_MIN overflow.
-        div_t d = div(numerator, denominator);
-        // the sign of div() is complexed, just barrier it
-        res += to_string(abs(d.quot));
-        if(d.rem == 0)
-            return res;
+        res += ((numerator >= 0) ^ (denominator >= 0)) ? "-" : "";
         
-        res += ".";
-        numerator = d.rem*10;
-        unordered_map<int, pair<size_t, int>> idx;
-        while(numerator != 0){
-            div_t d = div(numerator, denominator);
-            int unsigned_quot = abs(d.quot);
-            res += to_string(unsigned_quot);
+        int64_t num, den;
+        num = abs(static_cast<int64_t>(numerator));
+        den = abs(static_cast<int64_t>(denominator));
 
-            auto it = idx.find(unsigned_quot);
-            if(it != idx.end()){
-                // can't ac testcase:4 333
-                // if(it->second.second == d.rem){
-                //     size_t rptStrLen = res.size() - it->second.first;
-                //     size_t rptStrIdx = it->second.first - rptStrLen;
-                //     string rptStr = res.substr(it->second.first, rptStrLen);
-                //     res.replace(rptStrIdx, rptStrLen*2, "(" + rptStr + ")");
-                //     return res;
-                // }
-                size_t rptStrLen = res.size() - it->second.first;
-                // rptStrIdx may out of range, so type is int
-                int rptStrIdx = it->second.first - rptStrLen;
-                if(rptStrIdx >= 0){
-                    string rpt1 = res.substr(it->second.first, rptStrLen);
-                    string rpt2 = res.substr(rptStrIdx, rptStrLen);
-                    if(rpt1 == rpt2 && it->second.second == d.rem){
-                        res.replace(rptStrIdx, rptStrLen*2, "(" + rpt1 + ")");
-                        return res;
-                    }     
-                }
+        lldiv_t lld = div(num, den);
+        res += to_string(lld.quot);
+        if(lld.rem == 0) {
+            return res;
+        }
+        res += ".";
+
+        map<int64_t, int> numIdxs;
+        int i = res.size();
+        while(lld.rem) {
+            num = lld.rem * 10;
+            if(numIdxs.find(num) != numIdxs.end()) {
+                int idx = numIdxs[num];
+                res.insert(res.begin() + idx, '(');
+                res += ")";
+                return res;
             }
-            idx[unsigned_quot] = make_pair(res.size(), d.rem);
-            numerator = d.rem*10;
+            numIdxs[num] = i++;
+            lld = div(num, den);
+            res += to_string(abs(lld.quot));
         }
         return res;
     }
@@ -83,4 +70,13 @@ int main() {
         cout << out << endl;
     }
     return 0;
+    // int a = -5, b = -2;
+    // div_t d = div(a, b);
+    // cout << "-5%-2 = " << d.quot << ", " << d.rem << endl;
+    // a = 5, b = -2;
+    // d = div(a, b);
+    // cout << "5%-2 = " << d.quot << ", " << d.rem << endl;
+    // a = -5, b = 2;
+    // d = div(a, b);
+    // cout << "-5%2 = " << d.quot << ", " << d.rem << endl;
 }
