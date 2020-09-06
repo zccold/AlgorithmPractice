@@ -35,11 +35,6 @@ public:
         return root->val + max(leftMax, rightMax);
     }
 
-    /*
-     * 最大路径有两种可能，一是根节点加上左右子树最大路径，
-     *                   二是左右子树中某一层根节点加上它的左右子树最大路径。
-     * 使用全局变量记录全局最大路径，即避免遗漏可能性二。
-     */
     int maxPathSum(TreeNode *root)
     {
         maxGain(root);
