@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+//dp[i]里存了组成i的方案，因为没有set用，所以搞了个map，然后为了能在key里用，拼成了字符串
 func combinationSum2(candidates []int, target int) [][]int {
 	if target <= 0 {
 		return [][]int{}
@@ -14,11 +15,11 @@ func combinationSum2(candidates []int, target int) [][]int {
 	for _, v := range candidates {
 		countMap[v] = countMap[v] + 1
 	}
-	dp := make([]map[string]interface{}, target+1)
+	dp := make([]map[string]struct{}, target+1)
 	for i := 0; i < len(dp); i++ {
-		dp[i] = make(map[string]interface{})
+		dp[i] = make(map[string]struct{})
 	}
-	dp[0][""] = true
+	dp[0][""] = struct{}{}
 	for i := 1; i < len(dp); i++ {
 		for _, v := range candidates {
 			if i-v >= 0 {
@@ -30,7 +31,7 @@ func combinationSum2(candidates []int, target int) [][]int {
 					}
 					slice := append(sliceOld, v)
 					sort.Ints(slice)
-					dp[i][slice2str(slice)] = true
+					dp[i][slice2str(slice)] = struct{}{}
 				}
 			}
 		}
