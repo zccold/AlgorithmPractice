@@ -40,6 +40,12 @@ func Test_OK(t *testing.T) {
 			},
 			ans{""},
 		},
+		{
+			para{
+				[]string{"abab", "aba", ""},
+			},
+			ans{""},
+		},
 	}
 
 	for _, q := range qs {
