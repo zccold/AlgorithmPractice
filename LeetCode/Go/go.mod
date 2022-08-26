@@ -1,4 +1,4 @@
-module p0002_Add_Two_Numbers
+module code
 
 go 1.18
 
